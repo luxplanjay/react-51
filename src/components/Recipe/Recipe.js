@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { HiOutlineChartBar, HiOutlineChartPie } from 'react-icons/hi';
 import { BsAlarm } from 'react-icons/bs';
+import { RecipeDifficulty } from 'components/RecipeDifficulty/RecipeDifficulty';
 import {
   Card,
   InfoContainer,
@@ -9,7 +10,9 @@ import {
   Label,
 } from './Recipe.styled';
 
-export const Recipe = ({ recipe: { name, time, servings, calories } }) => {
+export const Recipe = ({
+  recipe: { name, time, servings, calories, difficulty },
+}) => {
   return (
     <Card>
       <RecipeName>{name}</RecipeName>
@@ -27,6 +30,7 @@ export const Recipe = ({ recipe: { name, time, servings, calories } }) => {
           <Label>{calories} calories</Label>
         </InfoBlock>
       </InfoContainer>
+      <RecipeDifficulty difficulty={difficulty} />
     </Card>
   );
 };
@@ -37,5 +41,6 @@ Recipe.propTypes = {
     time: PropTypes.string.isRequired,
     servings: PropTypes.number.isRequired,
     calories: PropTypes.number.isRequired,
+    difficulty: PropTypes.oneOf(['easy', 'medium', 'hard']),
   }),
 };
