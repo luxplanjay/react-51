@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-// import { App } from 'components/example-1/App';
-// import { App } from 'components/example-2/App';
-import { App } from 'components/example-3/App';
+import { App } from 'components/App';
 import './index.css';
+import { ThemeProvider } from 'styled-components';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={{}}>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 );
