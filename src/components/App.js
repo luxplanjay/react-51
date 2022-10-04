@@ -1,3 +1,7 @@
-export const App = () => {
-  return <>App</>;
-};
+import { Component } from 'react';
+
+export class App extends Component {
+  render() {
+    return <>App</>;
+  }
+}
