@@ -10,6 +10,7 @@ export class App extends Component {
     breeds: [],
     dog: null,
     selectedBreed: null,
+    isLoading: false,
   };
 
   async componentDidMount() {
