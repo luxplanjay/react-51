@@ -1,68 +1,78 @@
 import { Component } from 'react';
-import Select from 'react-select';
-import axios from 'axios';
-
-axios.defaults.baseURL = 'https://api.thedogapi.com/v1';
-axios.defaults.headers.common['x-api-key'] = process.env.REACT_APP_API_KEY;
+import toast, { Toaster } from 'react-hot-toast';
+import { getBreeds, getDogByBreed } from 'api';
+import { BreedSelect } from './BreedSelect';
+import { Dog } from './Dog';
+import { DogSkeleton } from './DogSkeleton';
 
 export class App extends Component {
   state = {
     breeds: [],
     dog: null,
     selectedBreed: null,
-    isLoading: false,
+    isLoadingBreeds: false,
+    isLoadingDog: false,
+    error: null
   };
 
   async componentDidMount() {
     try {
-      const response = await axios.get('/breeds');
-      this.setState({ breeds: response.data });
-    } catch (error) {}
+      this.setState({ isLoadingBreeds: true });
+      const breeds = await getBreeds();
+      this.setState({ breeds });
+    } catch {
+      this.setState({ error: 'Failed to load breeds :(' });
+    } finally {
+      this.setState({ isLoadingBreeds: false });
+    }
   }
 
   async componentDidUpdate(_, prevState) {
     if (prevState.selectedBreed !== this.state.selectedBreed) {
       this.fetchDog();
     }
+
+    if (prevState.error !== this.state.error) {
+      toast.error(this.state.error);
+    }
   }
 
-  buildOptions = () => {
-    return this.state.breeds.map(breed => ({
-      value: breed.id,
-      label: breed.name,
-    }));
-  };
-
-  handleChangeBreed = async option => {
-    this.setState({ selectedBreed: option.value });
+  selectBreed = breed => {
+    this.setState({ selectedBreed: breed });
   };
 
   fetchDog = async () => {
     try {
-      const response = await axios.get('/images/search', {
-        params: { breed_id: this.state.selectedBreed },
-      });
-      this.setState({ dog: response.data[0] });
-    } catch (error) {}
+      this.setState({ isLoadingDog: true });
+      const dog = await getDogByBreed(this.state.selectedBreed);
+      this.setState({ dog });
+    } catch {
+      this.setState({ error: 'Failed to load dog :(' });
+    } finally {
+      this.setState({ isLoadingDog: false });
+    }
   };
 
   render() {
-    const { dog } = this.state;
-    const options = this.buildOptions();
+    const { dog, breeds, isLoadingBreeds, isLoadingDog, error } = this.state;
 
     return (
-      <>
-        <Select options={options} onChange={this.handleChangeBreed} />
-        {dog && (
+      <div style={{ display: 'grid', gap: 16, padding: 16 }}>
+        <BreedSelect
+          breeds={breeds}
+          isLoading={isLoadingBreeds}
+          onSelect={this.selectBreed}
+        />
+        {error && <div style={{ color: 'red' }}>{error}</div>}
+        {isLoadingDog && <DogSkeleton />}
+        {dog && !isLoadingDog && (
           <div>
-            <img src={dog.url} alt={dog.breeds[0].name} width="480" />
-            <hr />
-            <button onClick={this.fetchDog}>
-              Показать другое изображение...
-            </button>
+            <Dog dog={dog} />
+            <button onClick={this.fetchDog}>Show different picture</button>
           </div>
         )}
-      </>
+        <Toaster position="bottom-right" />
+      </div>
     );
   }
 }
