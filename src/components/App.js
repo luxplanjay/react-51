@@ -4,8 +4,7 @@ import { getBreeds, getDogByBreed } from 'api';
 import { BreedSelect } from './BreedSelect';
 import { Dog } from './Dog';
 import { DogSkeleton } from './DogSkeleton';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 
 export const App = () => {
   const [breeds, setBreeds] = useState([]);
