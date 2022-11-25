@@ -1,20 +1,20 @@
 # React Arc Finale
 
-## Экосистема React
-
-- https://storybook.js.org/
-- https://mui.com/
-- https://tailwindcss.com/
-- https://nextjs.org/
-- https://react-hook-form.com/
-- https://tanstack.com/query/v4
-- https://youtube.com/playlist?list=PLNkWIWHIRwMFrVMaVMOYflo8R4QBk4vk0
-- https://www.patterns.dev/
-
 ## TypeScript
 
 - https://www.youtube.com/watch?v=92qcfeWxtnY
 - https://youtu.be/j-LxLzYgpX4
+
+## Экосистема React
+
+- https://nextjs.org/
+- https://storybook.js.org/
+- https://react-hook-form.com/
+- https://tanstack.com/query/v4
+- https://mui.com/
+- https://tailwindcss.com/
+- https://youtube.com/playlist?list=PLNkWIWHIRwMFrVMaVMOYflo8R4QBk4vk0
+- https://www.patterns.dev/
 
 ## A11y
 
